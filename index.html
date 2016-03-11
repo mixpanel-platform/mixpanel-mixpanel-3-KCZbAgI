@@ -67,16 +67,16 @@
           var stateUpdater = function(event) {
           var email = event.properties.Email;
             if ((email.substr(email.length-13, email.length - 1) != '@mixpanel.com' || !params.ignore_mixpanel) && event.properties.project_id == params.project_id) {
-              state.active = true;
+              state.activity = state.activity + 1 || 1;
               state.email = event.properties.Email;
             }
           };
           _.each(events, stateUpdater);
           return state;
         })
-        .filter(function(user_state) {return user_state.value.active})
+        .filter(function(user_state) {return user_state.value.activity})
         .map(function(user_state) {
-        return {Email: user_state.value.email, distinct_id: user_state.key[0]}
+        return {Email: user_state.value.email, distinct_id: user_state.key[0], 'Reports Viewed': user_state.value.activity};
         //return user_state.value.email;
         })
       }
@@ -115,7 +115,9 @@
           'ignore_mixpanel': ignoreMixpanel
 			};
 			MP.api.custom_query(script, params).done(function(results) {
-				results.unshift('');
+				results = _.sortBy(results, function(result) {return result['Reports Viewed'] * -1;});
+        debugger;
+        results.unshift('');
 				delete results[0];
 			  eventTable.MPTable('setData', results);
 			});
