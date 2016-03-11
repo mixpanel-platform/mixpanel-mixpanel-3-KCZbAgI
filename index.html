@@ -116,7 +116,6 @@
 			};
 			MP.api.custom_query(script, params).done(function(results) {
 				results = _.sortBy(results, function(result) {return result['Reports Viewed'] * -1;});
-        debugger;
         results.unshift('');
 				delete results[0];
 			  eventTable.MPTable('setData', results);
