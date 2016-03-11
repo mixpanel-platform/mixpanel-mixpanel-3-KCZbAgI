@@ -100,7 +100,7 @@
     <div id="table"></div>
     <script>
 		var script = document.getElementById('query').innerHTML;
-		var eventTable = $('#table').MPTable({showPercentages: false, firstColHeader: 'Count (not in order)'});
+		var eventTable = $('#table').MPTable({showPercentages: false, firstColHeader: 'Rank'});
 		var dateSelect = $('#dateSelect').MPDatepicker();
 		function runQuery() {
 			$('.select_button:not(#eventSelect > .select_button, #propSelect > .select_button, #startEventSelect > .select_button, #peoplePropSelect > .select_button)').addClass('small');
